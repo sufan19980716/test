@@ -1,0 +1,40 @@
+mongoose工具的使用
+步骤:
+  1. 引入模块
+    var mongoose = require('mongoose');
+  2. 连接数据库
+    mongoose.connect(url[,ops]);
+    url: mongodb://localhost:27017/dbName
+  3. 获取Schema
+    var Schema = mongoose.Schema;
+  4. 通过Schema创建数据结构
+    var schema = new Schema({数据结构});
+  5. 创建model
+    var model = mongoose.model('集合',schema);
+  6. 增删改查的操作
+    增: var m = new model({数据});
+            m.save(function(err,m){})
+    删: model.deleteOne({},function(err,raw){});
+    改: model.updateOne({},{$set:{}},function(err,raw){})
+    查: model.find({},function(err,docs){})
+
+
+练习01:
+  浏览器中输入数据,后台将数据保存进数据库
+
+
+1
+分别新建4个js文件
+  add.js, delete.js, update.js, find.js
+4个文件分别对应mongoose对数据库的4种操作
+
+(可以使用模块的封装)
+
+
+
+2
+注册和登录功能
+· 注册时，检查用户名是否重复，保证用户名唯一
+· 登录失败时，分别提示是用户名错，还是密码错
+
+

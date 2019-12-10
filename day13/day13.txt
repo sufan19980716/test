@@ -1,0 +1,14 @@
+GraphicsMagic的使用
+  这是一个图片处理软件
+  使用该软件的一个原因:其提供了很多后台语言的接口
+
+
+npm install nodemon -g
+
+
+
+
+
+
+
+

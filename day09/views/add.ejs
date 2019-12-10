@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  学号: <input type="text" id="sid"><br>
+  姓名: <input type="text" id="sname"><br>
+  年龄: <input type="text" id="sage"><br>
+  <button id="btn">提交</button>
+</body>
+<script>
+  btn.onclick = function(){
+    var id = sid.value;
+    var name = sname.value;
+    var age = sage.value;
+    // 获取xhr对象
+    var xhr = new XMLHttpRequest();
+    // 建立连接
+    xhr.open("post","/add");
+    // 设置请求头
+    xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    // 发送
+    xhr.send('id='+id+'&name='+name+'&age='+age);
+    // 监听
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState==4&&xhr.status==200){
+        var result = xhr.responseText;
+        if(result=="failed"){
+          alert('添加失败');
+          return;
+        }
+        if(result=='success'){
+          alert('添加成功');
+          location.href = '/';
+          return;
+        }
+      }
+    }
+  }
+</script>
+</html>

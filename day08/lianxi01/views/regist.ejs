@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+<body>
+  <form action="/regist" method="post" onsubmit="return check();">
+      用户名: <input type="text" name="username" id="uname">
+      <span id="s"></span>
+      <br>
+    密码: <input type="password" name="password" id="upwd"><br>
+    <input type="submit" value="注册">
+  </form>
+  <script src="/script/jquery.min.js"></script>
+  <script>
+    var canUse = false; // 用户名是否可用
+    var checking = true; // 正在检查用户名
+    function check(){
+      // 发送请求的前提条件:
+      // 两个输入框中都有有效值
+      // 用户名可以使用
+      var username = $("#uname").val().trim();
+      var password = $("#upwd").val().trim();
+      console.log(username,password);
+      if(!(username&&password)){
+        alert('用户名或密码不合法');
+        return false;
+      }
+      if(checking){ // 正在检查用户名
+        return false;
+      }
+      if(!canUse){
+        alert("用户名已存在");
+        return false;
+      }
+      return true;
+    }
+
+    $('#uname').on('blur',function(){
+      checking = true;
+      // $img = $("<img>");
+      // $img.attr('src','/imgs/wait.gif').attr('width',"50px");
+      // $('#s').html('');
+      // $('#s').append($img);
+      $("#s").html("正在检查用户名...").css("color","blue");
+      // 获取输入的用户名
+      var username = $("#uname").val();
+      // 发送请求,验证用户名是否可用
+      $.ajax({
+        url:'/check',
+        data: {username:username},
+        success: function(result){
+          checking = false; // 检查结束
+          var status = result.status;
+          if(status==0){
+            // 可以使用
+            canUse = true;
+            $("#s").html("用户名可以使用").css("color","black");
+            // $img = $("<img>");
+            // $img.attr('src','/imgs/yes.jpg').attr('width',"50px");
+            // $('#s').html('');
+            // $('#s').append($img);
+          }else{
+            canUse = false;
+            $("#s").html("用户名已存在").css("color","red");
+            // $img = $("<img>");
+            // $img.attr('src','/imgs/no.jpg').attr('width',"50px");
+            // $('#s').html('');
+            // $('#s').append($img);
+          }
+        }
+      })
+    });
+
+  </script>
+</body>
+</html>

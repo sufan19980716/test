@@ -1,0 +1,122 @@
+/*
+  less的基本语法
+*/
+// 变量
+// 1. 以@开头的,变量名由数字,字母,_,-组成
+@baseColor: #a1b1c1;
+.d1{
+  background-color: @baseColor;
+}
+
+.d2{
+  color: @baseColor;
+}
+/* 2. 变量还可以进行计算 */
+@color1:#123456;
+.d3{
+  color: @color1;
+  /* 123456- 2468ac */
+  background-color: @color1*2;
+}
+@color2: #aaaaaa;
+.d4{
+  /* aaaaaa - ffffff */
+  color: @color2*2;
+}
+@c1: #123456;
+@c2: #111111;
+.d5{
+  color: @c1 - @c2;
+}
+
+/* 3. 两个div,第二个div的宽度保持为第一个的两倍 */
+@width: 100px;
+.d1{
+  width:@width;
+}
+.d2{
+  width: @width*2;
+}
+
+/* 4. mixin混合 */
+.a1{
+  border:1px solid red;
+  background-color: #aaa;
+}
+.a2{
+  .a1;
+  width: 100px;
+  height: 100px;
+}
+
+/* 5. 动态样式 */
+.border(@color:black){
+  border: 1px solid @color;
+}
+.a3{
+  .border(red);
+}
+.a4{
+  .border(blue);
+}
+.a5{
+  .border;
+}
+.a6{
+  .border(@color1);
+}
+
+
+/* 6. 嵌套结构 */
+/* 可以按照标签的层级来写css的结构,代码结构与html相同,清晰 */
+div{
+  color: @color2;
+  h1{
+    color:black;
+  }
+  span{
+    display: block;
+    h1{
+      color: yellow;
+    }
+    a{
+      text-decoration: none;
+      &:hover{
+        background-color: red;
+      }
+    }
+  }
+}
+
+/* 7. 函数 */
+.c1{
+  color: color("red");
+}
+/* 变亮 */
+.c2{
+  color: lighten(red,10%);
+}
+.c3{
+  color: fade(red,75%);
+}
+
+/* 8. 作用域 */
+@global: 12px;
+.b1{
+  font-size: @global;
+}
+.b2{
+  @global: 20px;
+  font-size: @global;
+}
+
+
+/* 9. import */
+/* 引入外部的less文件 */
+
+@import "./out.less";
+
+div{
+  font-size: @size;
+  // color: @color6;
+}

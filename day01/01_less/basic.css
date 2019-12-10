@@ -1,0 +1,99 @@
+/*
+  less的基本语法
+*/
+.d1 {
+  background-color: #a1b1c1;
+}
+.d2 {
+  color: #a1b1c1;
+}
+/* 2. 变量还可以进行计算 */
+.d3 {
+  color: #123456;
+  /* 123456- 2468ac */
+  background-color: #2468ac;
+}
+.d4 {
+  /* aaaaaa - ffffff */
+  color: #ffffff;
+}
+.d5 {
+  color: #012345;
+}
+/* 3. 两个div,第二个div的宽度保持为第一个的两倍 */
+.d1 {
+  width: 100px;
+}
+.d2 {
+  width: 200px;
+}
+/* 4. mixin混合 */
+.a1 {
+  border: 1px solid red;
+  background-color: #aaa;
+}
+.a2 {
+  border: 1px solid red;
+  background-color: #aaa;
+  width: 100px;
+  height: 100px;
+}
+/* 5. 动态样式 */
+.a3 {
+  border: 1px solid red;
+}
+.a4 {
+  border: 1px solid blue;
+}
+.a5 {
+  border: 1px solid black;
+}
+.a6 {
+  border: 1px solid #123456;
+}
+/* 6. 嵌套结构 */
+/* 可以按照标签的层级来写css的结构,代码结构与html相同,清晰 */
+div {
+  color: #aaaaaa;
+}
+div h1 {
+  color: black;
+}
+div span {
+  display: block;
+}
+div span h1 {
+  color: yellow;
+}
+div span a {
+  text-decoration: none;
+}
+div span a:hover {
+  background-color: red;
+}
+/* 7. 函数 */
+.c1 {
+  color: #ff0000;
+}
+/* 变亮 */
+.c2 {
+  color: #ff3333;
+}
+.c3 {
+  color: rgba(255, 0, 0, 0.75);
+}
+/* 8. 作用域 */
+.b1 {
+  font-size: 12px;
+}
+.b2 {
+  font-size: 20px;
+}
+/* 9. import */
+/* 引入外部的less文件 */
+body {
+  font-size: 10px;
+}
+div {
+  font-size: 10px;
+}

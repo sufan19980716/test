@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    table,td{
+      border:1px solid red;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <table cellspacing="0" width="600px">
+    <tr>
+      <td rowspan="2">姓名</td>
+      <td rowspan="2">年龄</td>
+      <td rowspan="2">爱好</td>
+      <td colspan="3">成绩</td>
+    </tr>
+    <tr>
+      <td>html</td>
+      <td>css</td>
+      <td>js</td>
+    </tr>
+    <% for(var i=0;i<docs.length;i++){%>
+      <tr>
+        <td><%= docs[i].name %></td>
+        <td><%= docs[i].age %></td>
+        <td><%= docs[i].likes %></td>
+        <td><%= docs[i].score.html %></td>
+        <td><%= docs[i].score.css %></td>
+        <td><%= docs[i].score.js %></td>
+      </tr>
+    <%}%>
+  </table>
+</body>
+</html>

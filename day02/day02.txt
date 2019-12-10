@@ -1,0 +1,72 @@
+1. 模块
+  将一个独立的功能封装,就是一个模块
+
+2. fs模块
+  nodejs自己封装的一个对文件相关操作的模块.
+  fs模块中所有的操作都具有 同步 和 异步 两种方式.
+  在异步方法中,方法的最后一个参数为回调函数,回调函数的参数取决于具体的方法,但是第一个参数肯定是err
+
+
+  fs中的几个方法:
+  文件夹也可称之为目录
+  1) 新建文件夹
+    异步方法:
+    fs.mkdir(path,function(err){});
+    path:文件夹的路径
+    err: 创建失败的信息
+
+    同步方法:
+    fs.mkdirSync(path);
+
+  2) 新建文件
+    异步方法:
+    fs.writeFile(path,data,function(err){})
+    当文件已经存在时,默认会覆盖原有的数据
+
+    同步方法:
+    fs.writeFile(path,data);
+
+    fs.appendFile()也可以实现创建文件的功能
+    而且,其默认还是追加数据
+
+  练习01:
+    启动服务,在浏览器中输入
+    localhost:4000/a?username=zhangsan&password=123
+    接收数据,创建一个文件名为zhangsan.txt的文件
+    文件内容为123
+
+  练习02:
+    启动服务,在浏览器中输入
+    localhost:4000/a?username=zhangsan&password=123
+    接收数据,将username和password保存到一个users.txt的文件中
+    zs:123|ls:345|ww:abc|
+
+  3) 读取文件内容
+    fs.readFile(path,function(err,data){})
+
+
+    var data = fs.readFileSync(path);
+
+    练习:
+      通过浏览器访问,将该文本的内容显示在浏览器中
+
+  4) 读取文件夹的内容
+    获取某个文件夹内有哪些文件或文件夹
+
+    fs.readdir(path,function(err,files){});
+
+    var files = fs.readdirSync(path);
+
+  5) 判断某个file的状态
+
+    fs.stat(path,function(err,stats){})
+
+  6) 删除文件
+    fs.unlink(path,function(err){});
+
+  7) 删除文件夹
+    fs.rmdir(path,function(err){})
+    只能删除空文件夹
+
+  练习03:
+    删除一个非空文件夹

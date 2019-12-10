@@ -1,0 +1,105 @@
+git命令
+
+  练习:
+    1. 切换进test文件夹,查看当前仓库的状态
+    2. 如果有未提交,则先提交
+    3. 创建一条新的分支v1
+    4. 然后查看当前有哪些分支,切换到v1分支
+    5. 在v1分支中,修改1.txt内容为:v1的修改,并提交
+    6. 切换到master分支,打开1.txt,查看内容是否变化
+
+
+  分支
+    4) 合并分支
+      git merge 分支名称
+      将目标分支的修改合并到当前所在分支
+
+      在master分支上使用 git merge v1
+      将v1上的修改合并到master分支上
+      v1的内容没有变化
+      master的内容发生变化(将v1新增的修改复制回来)
+
+    5) 删除分支
+      git branch -d 分支名称
+      删除指定名称的分支
+      不能删除当前所在的分支
+
+      如果分支有提交没有合并,则删除失败
+      可以使用
+      git branch -D 分支名
+      来强制删除
+
+
+github的使用
+  https://github.com
+
+  1. 创建远程仓库
+    登录后点击右上角 + 
+    选择new repository
+    在repository name中填入远程仓库的名称
+    点击create
+  
+  2. 将远程仓库与本地仓库关联起来
+    git remote add origin 远程仓库的地址
+
+    git remote 固定语法
+    add 添加,添加远程
+    origin 表示远程仓库的代名词
+           指代后面的远程仓库的地址,方便以后使用
+
+  3. 将本地仓库的内容推送给远程仓库
+    git push -u origin master
+
+    git push 固定语法
+    -u 只在第一次推送时添加,以后就不需要了
+    origin 就是上一步关联远程仓库时的代名词,指代
+           远程仓库的地址
+    master 表示推送的分支
+
+
+  4. 查看当前本地仓库有哪些远程仓库
+    git remote
+  
+  5. 删除与某个远程仓库的关联
+    git remote remove 代名词
+
+  6. 将远程仓库的内容下载到本地
+    1) clone or download
+
+    2) git clone命令
+      git clone 远程仓库的地址
+      将远程仓库作为一个完整的文件夹下载下来
+      该文件夹就是一个仓库,包含所有的提交信息
+
+      下载的仓库默认与远程仓库关联
+    
+    3) git pull 命令
+      git pull 远程仓库地址 master
+      git pull origin master
+
+      先在本地创建一个空文件夹,初始化为本地仓库
+      进入到文件夹中,输入命令将远程仓库与本地仓库关联
+      git remote add origin url
+
+      git pull origin master
+      
+
+  在推送时,如果关联的是HTTPS方式,则每次推送需要输入用户名和密码
+  而 SSH不需要输入 ,只需要在一开始配置秘钥即可
+
+
+    查看当前电脑下有没有秘钥
+      ls -a ~/.SSH
+      如果显示 no such file or directory则说明没有秘钥
+
+      生成秘钥:
+        ssh-keygen -t rsa -C "邮箱地址"
+        生成两个文件分别是:
+          id_rsa        私钥
+                        私钥保存在本地电脑中,不能被删除
+          id_rsa.pub    公钥
+                        复制其中的内容,将其配置到gitHub中
+        
+
+
+

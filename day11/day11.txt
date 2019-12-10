@@ -1,0 +1,26 @@
+状态管理
+  记录浏览器与服务器之间的交互状态
+
+
+  1. cookie机制
+    服务器生成cookie,浏览器保存cookie
+    当浏览器再次访问服务器时,会自动带上cookie
+    内容不加密,用户可以看见cookie的内容
+
+
+  使用cookie,记录用户搜索历史
+  访问localhost:4000/search?film=Titanic
+  页面显示   你的搜索记录: Titanic
+  localhost:4000/search?film=金刚
+  你的搜索记录: Titanic,金刚
+  localhost:4000/search?film=Star Wars
+  你的搜索记录: Titanic,金刚,Star Wars
+
+
+  记录用户的登录状态
+  第一次登录时,记录用户的状态(使用cookie保存登录信息),页面显示: 
+  欢迎你,你已经访问了1次,上次登录时间: 
+  以后访问,则更新登录信息,同时,页面显示:
+  欢迎你,你已经访问了n次,上次登录时间: 20.....
+
+

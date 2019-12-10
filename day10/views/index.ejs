@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <form action="/tijiao">
+    用户名: <input type="text" name="username"><br>
+    留言内容: <textarea name="message"></textarea><br>
+    <input type="submit" value="发言">
+  </form>
+  <hr>
+  <table>
+    <tr>
+      <td>昵称</td>
+      <td>留言</td>
+      <td>时间</td>
+    </tr>
+    <%for(var i=0;i<docs.length;i++){%>
+      <tr>
+        <td><%= docs[i].username %></td>
+        <td><%= docs[i].message %></td>
+        <td><%= docs[i].time %></td>
+      </tr>
+    <%}%>
+  </table>
+</body>
+</html>

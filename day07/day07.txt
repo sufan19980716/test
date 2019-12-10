@@ -1,0 +1,156 @@
+1. mongo常用shell命令
+  9) 删除数据
+    db.集合名.remove(json条件);
+    根据条件删除集合中的某些数据
+    如果是无条件删除所有数据
+    db.集合名.remove({}); // 空对象不能省略
+
+    插入一个相同的数据进去,查询
+    删除该数据,查询是否删除了多条数据
+    删除所有数据,查询还有没有其他数据
+db.stu.remove({});
+db.stu.remove({id:2});
+db.stu.find()
+db.stu.insert({a:1,b:2,c:3});
+db.stu.insert({a:5,b:6,c:7});
+
+
+  10) 修改数据
+    db.集合名.update({json条件},{json数据});
+    第一个参数表示修改的条件
+    第二个参数表示修改的数据
+    第二个参数如果直接写数据,则会覆盖(替换)掉原来的数据,如果要修改数据,则必须添加$set属性:
+  db.集合名.update({json条件},{$set:{json数据}})
+    
+    默认修改第一条匹配到的数据,修改后就不再继续向下匹配了
+
+    批量修改:
+      添加第三个参数: {multi: true}
+  db.集合名.update(条件,数据,{multi:true});
+
+db.stu.update({a:10},{$set:{a:5}});
+将a为5的信息里面的b值修改为10
+db.stu.update({a:5},{$set:{b:20}},{multi:true});
+
+
+  练习:
+    关闭掉所有命令窗口
+    1. 启动数据库服务,并连接数据库服务
+    2. 查看当前服务器中有哪些数据库,然后创建test2数据库
+    3. 查看当前所在数据库的名称
+    4. 查看test2数据库中有哪些集合
+    5. 创建集合stu,并插入数据
+      {id:1,name:'jimy',class:"3(1)"}
+      {id:2,name:'jack',class:"3(2)"}
+      {id:3,name:'rose',class:"3(1)"}
+      {id:4,name:'lucy',class:"3(2)"}
+    6. 查询所有数据
+    7. 将学号为3号的姓名修改为Mike
+    8. 将3(2)的class修改为3(3)
+    9. 删除jimy的信息
+    10. 查询所有数据
+
+
+  11) 从外部导入数据
+  
+  mongoimport -d 数据库名称 -c 集合名称 文件路径
+
+  该命令也是在Windows环境下执行的
+
+
+  mongoimport -d web -c stu2 /d/NodeJs/day07/data.json
+
+
+  12) 删除集合
+    db.集合名.drop()
+
+
+  13) 删除数据库
+    db.dropDatabase()
+    删除的就是当前所在的数据库
+    删除成功后,输入db,显示的依然是被删除的数据库
+    相当于刚连接数据库use之后,还没有向数据库中添加数据的状态
+
+
+2. mongodb的关系运算
+  1) 相等 $eq   equal
+    查询年龄等于20岁的人的信息
+    db.stu.find({age:20})
+    db.stu.find({age:{$eq:20}})
+
+db.stu2.find({id:1});
+db.stu2.find({id:{$eq:1}});
+
+  2) 大于 $gt   greater than
+    查询id大于5号的信息
+    db.stu2.find({id:{$gt:5}});
+
+    大于等于  $gte  greater than or equal
+
+  3) 小于 $lt  less than
+    小于等于 $lte  less than or equal
+
+  4) 不相等
+      $ne  not equal
+      查询id不为5的信息
+      db.stu2.find({id:{$ne:5}});
+
+  5) 
+    $or 或者
+      查询id为5或者为8的信息
+      db.stu2.find({$or:[{id:5},{id:8}]});
+
+      查询id为5或者name为test1的信息
+      db.stu2.find({$or:[{id:5},{name:"test1"}]});
+
+    $nor 既不是,也不是
+      查询id不为5并且id不为8的信息
+      db.stu2.find({$nor:[{id:5},{id:8}]});
+      查询id不为5且name不为test1的信息
+      db.stu2.find({$nor:[{id:5},{name:"test1"}]});
+      
+
+    $and 并且
+      查询id为5,年龄为15的信息
+      db.stu.find({id:5,age:15});
+      db.stu.find({$and:[{id:5},{age:15}]});
+
+      查询id小于5,并且年龄大于10的信息
+      {$and:[{id:{$lt:5}},{age:{$gt:10}}]}
+
+      查询年龄为8岁,并且性别为M的信息
+      db.stu.find({age:8,sex:"M"});
+      db.stu.find({$and:[{age:8},{sex:"M"}]});
+      查询年龄小于9岁,并且学号大于5的信息
+      db.stu.find({
+        age:{$lt:9},id:{$gt:5}
+      });
+      db.stu.find({
+        $and:[{age:{$lt:9}},{id:{$gt:5}}]
+      })
+
+    $not 非,取反
+      查询非9岁的信息
+      db.stu.find({age:{$not:{$eq:9}}})
+
+
+
+3. 使用nodejs操作数据库
+
+
+  使用express创建服务器
+  访问/请求时,显示注册页面
+    username,password
+  点击注册按钮,发送/regist请求
+  服务器获取请求参数,将其保存进数据库某个集合中
+  页面显示注册成功
+
+
+
+
+
+读取数据库中的数据,以表格的形式将其显示在页面上
+
+
+
+

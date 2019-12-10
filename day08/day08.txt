@@ -1,0 +1,82 @@
+1. 
+  启动 mongod (==> mongod --dbpath C:/data/db)
+       mongod --dbpath 自己的路径D:/db
+  连接 mongo
+  进入数据/创建数据库 use 数据库名称
+  当前在哪个数据库  db
+  查看有哪些数据库  show dbs
+  有哪些集合  show collections
+  增删改查:
+      db.collection.insert({})
+      db.collection.remove({})
+      db.collection.update({},{})
+      db.collection.find({})
+  $lt,$gt...
+  $and,$or,$not,$nor
+
+
+
+2. 使用nodejs连接数据库
+  1) 引入mongodb模块,获取MongoClient对象
+    var MongoClient = require('mongodb').MongoClient;
+  
+  2) 连接数据库
+    MongoClient.connect(url,function(err,client){})
+    其中,url为数据库的地址mognodb://ip:port
+    回调函数为连接的结果
+    err:代表连接失败的信息
+    client:代表连接成功后得到的连接对象
+  
+  3) 通过连接对象获取数据库名称
+    var db = client.db(数据库名);
+  4) 通过数据库获取集合名
+    var col = db.collection(集合名);
+  
+  5) 通过集合对数据库进行增删改查操作
+    增
+      col.insertOne({},function(err,result){})
+      col.insertMany([{},{}],function(err,result){});
+    删
+      col.deleteOne({},function(err,result){})
+      col.deleteMany({},function(err,result){})
+    改
+      col.updateOne({},{$set:{}},function(err,result){})
+      col.updateMany({},{$set:{}},function(err,result){})
+    查
+      col.find({}).toArray(function(err,docs){})
+
+
+
+localhost:4000
+  --> 展示所有数据库中的数据
+    -->查询数据,解析遍历数据,展示在table中
+    -->页面中的元素:table,3个a链接
+  
+  进货链接-->跳转到增加页面-->form表单
+    -->输入数据,点击提交-->服务器获取数据,保存
+    -->回到首页重新加载
+  
+  删除链接-->发送删除请求-->服务器接收参数
+    -->根据参数删除数据-->回到首页重新加载
+
+  修改链接-->跳转到修改页面(传递参数)-->
+    服务器接收参数获取修改的原数据-->跳转到修改页面-->输入数据,点击提交-->服务器接收请求
+    -->获取参数,根据条件修改数据
+    -->重新加载首页
+
+
+  点击链接(传id)---服务器接收id,根据id查询到对应id的完整数据-->将数据发送给修改页面解析
+  -->pid和pname不可修改,price和count可以修改
+  (修改的条件依然是_id),设置一个隐藏的input传id
+  -->服务器接收id,price,count
+  -->id转换类型
+  -->根据id修改数据,刷新显示页面
+
+
+
+mongoose工具的使用
+  
+
+
+
+

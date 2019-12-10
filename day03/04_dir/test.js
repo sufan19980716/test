@@ -1,0 +1,3 @@
+require('./myModule');
+
+require('tt');

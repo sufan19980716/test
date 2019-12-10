@@ -1,0 +1,80 @@
+1. 模拟网站静态页面的访问
+  新建文件夹project,其中包含
+    css/index.css
+    images/1.jpg
+    js/index.js
+    index.html
+  在project文件夹外新建01_project.js,用于启动服务
+
+  效果: html页面能正常访问,但是无法获取到引用的外部资源文件
+
+  原因: nodejs中没有根目录,导致index.html中使用相对路径或绝对路径都会出错,无法获取正确的路径
+
+  解决方法:
+    手动设置一个根目录,让所有的请求都进入到该根目录中去获取
+
+
+2. 模块
+  * 在nodejs中,以模块为单位划分所有功能,并提供一个完整的模块加载机制
+  * 使用模块,可以将一个完整的应用分割成不同部分,使代码之间的耦合度降低
+  * 不建议在一个js中写全部的代码
+  1) 如何在一个js中使用另一个js
+    使用关键字 require
+
+    注意:
+      表示当前路径的./不可省略
+      后缀名可以省略不写,但是不建议
+      不能直接调用其中的属性或方法
+
+  2) 如何调用另一个js中的属性或方法
+    通过关键字exports将可以给别人调用的属性或方法暴露出去
+    exports.属性名 = 属性名
+    exports.方法名 = 方法名
+
+  3) 如何暴露一个对象
+    module.exports = {}
+    module.exports = 对象
+
+    PS:
+      使用exports暴露只能一个个的进行暴露,不能合并成一个对象
+      module.exports可以暴露一个完整的对象或者是一个构造函数,但是一个js只能暴露一次
+
+  练习01:
+    新建lianxi01.js创建服务,处理请求
+     req.url=='showIndex'
+     req.url=='showInfo'
+     其他地址
+    新建route.js,定义3个方法,由lianxi01.js调用
+      3个方法中分别处理对应的请求
+        showIndex 页面显示 这是首页
+        showInfo 页面显示 这是信息页
+        其他的地址 地址错误
+
+  4) 暴露一个文件夹
+    狭义上的模块,一个js就是一个模块
+    广义上的模块,多个js之间相互调用,最终实现一个大的功能
+    将封装的代码全部放入一个文件夹中,然后在使用时,直接引入该文件夹名称
+
+    注意:
+      引用文件夹,实质上就是引用该文件夹中的index.js(index.js作为该模块的入口文件)
+      所以,被引用的文件夹中必须包含一个index.js文件,如果没有该文件则报错
+      或者通过配置文件package.json来重新指定一个入口文件
+      (默认入口文件为index.js,package.json可以修改默认的入口文件)
+      在package.json中定义main属性,指定入口文件
+
+      也可以使用命令 npm init -y自动生成该文件
+
+    PS:
+      表示当前路径的./不能省略,如果省略,node会从一个默认的文件夹中去查找该模块
+      node_modules
+      node_modules不一定在当前目录下,可以在直接父目录下
+
+
+使用别人的模块
+  www.npmjs.com
+  使用silly-datetime格式化时间
+
+  使用rimraf模块删除非空文件夹
+    var rf = require('rimraf');
+    rf("path",function(err){});
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    table,td{
+      border:1px solid red;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <table cellspacing="0" width="600px">
+    <tr>
+      <td rowspan="2">姓名</td>
+      <td rowspan="2">年龄</td>
+      <td rowspan="2">爱好</td>
+      <td colspan="3">成绩</td>
+    </tr>
+    <tr>
+      <td>html</td>
+      <td>css</td>
+      <td>js</td>
+    </tr>
+  </table>
+  <button id="btn">加载数据</button>
+</body>
+<script src="/jquery.min.js"></script>
+<script>
+  $("#btn").on('click',function(){
+    $.ajax({
+      url:'/getData',
+      success: function(result){
+        // console.log(result);
+        if(result.status!=0){
+          // 获取数据失败,弹窗失败信息
+          alert(result.msg);
+          return ;
+        }
+        // 获取数据成功
+        var docs = result.docs; // 数据
+        var html = '';
+        for(var i=0;i<docs.length;i++){
+          html+='<tr>';
+          html+='<td>'+docs[i].name+'</td>';
+          html+='<td>'+docs[i].age+'</td>';
+          html+='<td>'+docs[i].likes+'</td>';
+          html+='<td>'+docs[i].score.html+'</td>';
+          html+='<td>'+docs[i].score.css+'</td>';
+          html+='<td>'+docs[i].score.js+'</td>';
+          html+='</tr>';
+        }
+        $('table').append(html);
+      }
+    })
+
+  });
+</script>
+</html>

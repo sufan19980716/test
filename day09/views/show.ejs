@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <table>
+    <tr>
+      <td>学号</td>
+      <td>姓名</td>
+      <td>年龄</td>
+      <td>操作</td>
+    </tr>
+    <% for(var i=0;i<docs.length;i++){ %>
+      <tr>
+        <td><%= docs[i].id %></td>
+        <td><%= docs[i].name %></td>
+        <td><%= docs[i].age %></td>
+        <td>
+<a href="javascript:;" onclick="del('<%=docs[i]._id%>')">删除</a>
+<a href="javascript:;" onclick="mod(this,'<%=docs[i]._id%>')">修改</a>
+        </td>
+      </tr>
+    <% } %>
+  </table>
+  <div>
+    <a href="/add">添加</a>
+  </div>
+  <script>
+    function del(id){
+      // console.log(id);
+      var f = confirm("确定删除此条数据?");
+      if(!f){
+        // 点了取消
+        return;
+      }
+      // 点击确定,发请求,删除数据
+      location.href = '/del?id='+id;
+    }
+    function mod(e,id){
+      // 获取被点击数据的name的节点
+      var sname = e.parentNode.previousElementSibling.previousElementSibling;
+      // console.log(sname);
+      sname.innerHTML = `<input type="text" size="3" onblur="send(this,'`+id+`')">`;
+    }
+
+    function send(e,id){
+      var name = e.value;
+      location.href = '/mod?id='+id+'&name='+name;
+    }
+
+
+  </script>
+  
+</body>
+</html>

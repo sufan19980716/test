@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>相册</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <style>
+    .d ul{
+      list-style: none;
+    }
+    .d li{
+      float: left;
+      text-align: center;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">相册</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/pic/upload">上传图片<span class="sr-only">(current)</span></a></li>
+          <li><a href="/dir/create">新建相册</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="d">
+    <ul>
+      <% for(var i=0;i<dirs.length;i++){ %>
+      <li>
+        <a href="/pic/show?dirName=<%= dirs[i] %>">
+          <img src="/images/dir.jpg" width="100px">
+        </a>
+        <h3><%= dirs[i] %></h3>
+        <a href="javascript: ;" onclick="del('<%= dirs[i] %>')">删除</a>
+      </li>
+      <% } %>
+    </ul>
+  </div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script>
+  function del(dirName){
+    var f = confirm('是否确定要删除文件夹: '+dirName);
+    if(!f){
+      return ;
+    }
+    // location.href = "/dir/del/"+dirName;
+    $.ajax({
+      url: "/dir/del/"+dirName,
+      success: function(result){
+        // console.log(result);
+        // document.write(result);
+        // location.href = '/';
+        if(result=='success'){
+          alert('删除成功');
+          location.href = '/';
+        }else{
+          alert('删除失败');
+        }
+      }
+    });
+  }
+</script>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <style>
+    body{
+      padding: 10px 200px;
+    }
+    textarea{
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+  <form action="/message/tijiao" method="post" class="form">
+    <h3>用户名:</h3> <input type="text" name="username" class="form-control"><br>
+    <h3>留言内容:</h3> <textarea name="message" class="form-control" rows="5"></textarea><br>
+    <input class="btn btn-primary btn-lg" type="submit" value="发言">
+  </form>
+  <hr>
+  <!-- 留言展示区 -->
+  <ul>
+    <% for(var i=0;i<docs.length;i++){ %>
+    <li>
+      <div><%= docs[i].username %> 说: </div>
+      <div><%= docs[i].message %></div>
+      <div><%= docs[i].time %></div>
+      <div>
+        <a href="javascript:;" onclick="del('<%= docs[i]._id %>')">删除</a>
+        <a href="javascript:;" onclick="mod(this,'<%= docs[i]._id %>')">修改</a>
+      </div>
+    </li>
+    <% } %>
+  </ul>
+  <script src="/js/jquery.min.js"></script>
+  <script>
+    function del(id){
+      var f = confirm('确定删除?');
+      if(!f){
+        return ;
+      }
+      $.ajax({
+        url:'/message/del?id='+id,
+        success: function(result){
+          // 不管成功还是失败,先弹结果
+          alert(result.msg);
+          if(result.status!=0){
+            // 失败,不错任何操作
+            return;
+          }
+          // 成功,刷新页面(重新发送/请求)
+          location.href = '/';
+        }
+      })
+    }
+    function mod(e,id){
+      // 根据点击的连接找到对应的留言区
+        var $div = $(e).parent().prev().prev();
+        // 获取$div原来的内容
+        var text = $div.text();
+        // 修改页面节点为一个input输入框
+        var html = `<input type="text" autofocus onblur="mod(this,'`+id+`','`+text+`')">`;
+        $div.html(html);
+    }
+    function send(e,id,text){
+      var val = e.value.trim(); // 获取修改的值
+      // 如果没有输入任何职,或与原值一样,则返回原来的值
+      if(val=='' || val==text){
+        $(e).parent().html(text);
+        return;
+      }
+      $.ajax({
+        url:'/message/mod?id='+id+'&val='+val,
+        success: function(result){
+          alert(result.msg);
+          // 失败不做改变,成功则显示最新数据
+          if(result.status==0) {
+            // 将原div里的input替换为新的数据
+            $(e).parent().text(val);
+            
+          }
+        }
+
+      })
+    }
+
+  </script>
+</body>
+</html>
